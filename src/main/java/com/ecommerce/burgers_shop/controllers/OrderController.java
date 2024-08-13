@@ -61,7 +61,7 @@ public class OrderController {
         this.burgerOrderRepository.save(burgerOrder);
         status.setComplete();
         log.info("Order processing : " + burgerOrder + " --- " + user);
-        return "redirect:/";
+        return "redirect:/admin";
 
     }
 

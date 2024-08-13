@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 // @AllArgsConstructor
 // @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 public class Burger {

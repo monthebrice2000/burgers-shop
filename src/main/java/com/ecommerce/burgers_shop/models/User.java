@@ -1,7 +1,9 @@
 package com.ecommerce.burgers_shop.models;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +27,7 @@ import lombok.Setter;
 @Table(name = "Users")
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
@@ -40,10 +44,13 @@ public class User implements UserDetails {
     private final String state;
     private final String zip;
     private final String phone;
+    private final String roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+        // List<GrantedAuthority> roles = new ArrayList<>();
+        // this.roles.forEach( role -> roles.add(new SimpleGrantedAuthority(role)) );
+        return Arrays.asList( new SimpleGrantedAuthority( this.roles ) );
     }
 
     @Override
