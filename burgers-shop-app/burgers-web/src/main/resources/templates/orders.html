@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Taco Cloud</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+  </head>
+
+  <body>
+    <form method="POST" th:action="@{/logout}">
+      <input type="submit" value="Logout" />
+    </form>
+    <form
+      method="POST"
+      th:action="@{/admin/deleteOrder}"
+      th:object="${orders}"
+      id="orderForm"
+    >
+      <span
+        class="validationError"
+        th:if="${#fields.hasErrors()}"
+        th:errors="*{orders}"
+        >Ingredient Error</span
+      >
+      <h1>Order your taco creations!</h1>
+
+      <img th:src="@{/images/tacofood.png}" />
+
+      <h3>All Burgers Orders:</h3>
+      <ul>
+        <li th:each="order : ${orders}">
+          <input
+            name="orders"
+            type="checkbox"
+            checked="checked"
+            th:value="${order.id}"
+          />
+          <span th:text="${order.deliveryName}">order name</span>
+        </li>
+      </ul>
+      <br />
+
+      <input type="submit" value="Delete Orders" />
+    </form>
+  </body>
+</html>

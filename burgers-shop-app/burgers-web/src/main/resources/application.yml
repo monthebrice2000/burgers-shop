@@ -1,0 +1,180 @@
+server:
+  shutdown: graceful
+  port: 8081
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  application:
+    name: burgers-web
+  profile:
+    active:
+      - dev
+      # - rabbitmq-template
+      # - rabbitmq-listener
+  datasource:
+    url: jdbc:h2:mem:burgers_shop_dev_db;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    # schema:
+    #   - order-schema.sql
+    #   - ingredient-schema.sql
+    #   - taco-schema.sql
+    #   - user-schema.sql
+    # data:
+    #   - ingredients.sql
+  jpa:
+    show-sql: true
+    # generate-ddl: false
+    hibernate:
+      ddl-auto: create-drop #update # validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        use_sql_comments: true
+        format_sql: true
+  # main:
+  #    allow-bean-definition-overriding: true
+  data:
+    rest:
+      base-path: /data-api
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  # sql:
+  #   init:
+  #     mode: embedded
+  security:
+    user:
+      name: user
+      password: password
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/oauth2/jwks
+      authorizationserver:
+        client:
+          oidc-client:
+            registration:
+              client-id: "Ov23liFpUOo2O8lyTbjZ"
+              client-secret: "{noop}23d506b91b6283c2eac0f6d56001b2842cbaac29"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://localhost:8080/login/oauth2/code/Ov23liFpUOo2O8lyTbjZ"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8080/"
+              scopes:
+                - "writeIngredients"
+                - "deleteIngredients"
+                - "openid"
+                - "profile"
+                # - user:email
+                # - read:user
+            require-authorization-consent: true
+      # client:
+      #   registration:
+      # taco-admin-client:
+      #   provider: tacocloud
+      #   client-id: taco-admin-client
+      #   client-secret: secret
+      #   authorization-grant-type: authorization_code
+      #   redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
+      #   scope: writeIngredients,deleteIngredients,openid
+      # github:
+      #   clientId: Ov23liFpUOo2O8lyTbjZ
+      #   clientSecret: 23d506b91b6283c2eac0f6d56001b2842cbaac29
+      # # client-authentication-methods:
+      # #   - "client_secret_basic"
+      # authorization-grant-type: "authorization_code"
+      # #   - "refresh_token"
+      # redirect-uri: "http://localhost:8080/login/oauth2/code/github"
+      # # post-logout-redirect-uris:
+      # #   - "http://127.0.0.1:8080/"
+      # scopes:
+      #   # - "writeIngredients"
+      #   # - "deleteIngredients"
+      #   # - "openid"
+      #   # - "profile"
+      #   - user:email
+      #   - read:user
+      # require-authorization-consent: true
+      # provider:
+      # tacocloud:
+      #   issuer-uri: http://localhost:8080
+      #   authorization-uri: http://localhost:8080/oauth2/authorize
+      #   token-uri: http://localhost:8080/oauth2/token
+      #   jwk-set-uri: http://localhost:8080/oauth2/jwks
+      #   user-info-uri: http://localhost:8080/userinfo
+      #   user-name-attribute: sub
+      # github-id:
+      #   issuer-uri: http://localhost:8080
+      #   authorization-uri: http://localhost:8080/oauth2/authorize
+      #   token-uri: https://github.com/login/oauth/access_token
+      #   jwk-set-uri: http://localhost:8080/oauth2/jwks
+      #   user-info-uri: http://localhost:8080/userinfo
+      #   user-name-attribute: sub
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:8083
+        username: user
+        password: password
+        instance:
+          serviceUrl: http://localhost:8081/
+          managementUrl: http://localhost:8081/actuator
+          healthUrl: http://localhost:8081/actuator/health
+          metadata:
+            user:
+              username: user
+              password: password
+
+burger:
+  orders:
+    pageSize: 10
+
+logging:
+  level:
+    # root: INFO
+    org:
+      hibernate:
+        SQL: DEBUG
+      springframework:
+        web: DEBUG
+        data: DEBUG
+      boot:
+        autoconfigure:
+          data:
+            rest: DEBUG
+            jpa: DEBUG
+            orm: DEBUG
+
+# request actuator curl localhost:8080/actuator
+management:
+  security:
+    enabled: false
+  health:
+    # probes:
+    #   enabled: true
+    defaults:
+      enabled: false
+  endpoints:
+    health:
+      show-details: always
+      sensitive: false
+    web:
+      # base-path: /management
+      exposure:
+        include: "*"
+        # exclude: threaddump,heapdump
+# ---
+# spring:
+#   profiles: prod
+#   datasource:
+#     url: jdbc:mysql:/ /localhost/tacocloud
+#     username: tacouser
+#     password: tacopassword

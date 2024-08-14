@@ -1,0 +1,36 @@
+server:
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  application:
+    name: burgers-messaging
+  profile:
+    active:
+      - dev
+      - rabbitmq-template
+      - rabbitmq-listener
+    artemis:
+    host: localhost
+    port: 61617
+    user: tacoweb
+    password: l3tm31n
+  jms:
+    template:
+      default-destination: tacocloud.order.queue
+      receive-timeout: 2
+  rabbitmq:
+    host: localhost
+    port: 5673
+    username: tacoweb
+    password: l3tm31n
+    template:
+      exchange: tacocloud.order
+      routing-key: kitchens.central
+      receive-timeout: 30000
+  kafka:
+    bootstrap-servers:
+      - localhost:9092 # - kafka.tacocloud.com:9092
+    template:
+      default-topic: tacocloud.orders.topic
