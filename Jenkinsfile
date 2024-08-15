@@ -32,11 +32,8 @@ pipeline{
                     }
                     post {
                         always {
-                            junit './burgers-shop-app/**/target/surefire-reports/*.xml'
-                            echo 'Successfully Reports Unit results test for burgers-shop-app'
-                            
-                            junit './burgers-admin-app/**/target/surefire-reports/*.xml'
-                            echo 'Successfully Reports Unit results test for burgers-admin-app'
+                            junit '**/target/surefire-reports/*.xml'
+                            echo 'Successfully Reports Unit results tests for burgers-shop'
                         }
                     }
                 }
@@ -81,6 +78,25 @@ pipeline{
             steps{
                 echo 'CI/CD : Deploy Step'
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+            cleanWs()
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+            archiveArtifacts '**/*'
+        }
+        failure {
+            echo 'Pipeline failed. Notifying team...'
+            mail body: "${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}: \n\n ${env.BUILD_URL} has result ${currentBuild.result} \n\n Check console output at ${BUILD_URL} to view the results.", 
+                    subject: "Build failed! - ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!", 
+                    to: 'devops@mycompany.com'
+            // Add notification logic here, e.g., email or Slack notification
+
         }
     }
 }
