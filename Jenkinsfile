@@ -87,14 +87,29 @@ pipeline{
             cleanWs()
         }
         success {
+            
             echo 'Pipeline completed successfully!'
-            archiveArtifacts '**/*'
+            
+            // archiveArtifacts artifacts: "**/target/*.jar"
+            // echo 'Archiving artifacts successfully !!!'
+            
+            emailext (
+                to: 'test@example.com',
+                subject: "Build Success - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Job '${env.JOB_NAME}' (#${env.BUILD_NUMBER}) was successful.</p>
+                         <p>Check console output at <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>.</p>"""
+            )
+            echo 'Email Send Successfully...'
         }
         failure {
             echo 'Pipeline failed. Notifying team...'
-            mail body: "${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}: \n\n ${env.BUILD_URL} has result ${currentBuild.result} \n\n Check console output at ${BUILD_URL} to view the results.", 
-                    subject: "Build failed! - ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!", 
-                    to: 'devops@mycompany.com'
+            emailext (
+                to: 'test@example.com',
+                subject: "Build Failure - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Job '${env.JOB_NAME}' (#${env.BUILD_NUMBER}) has failed.</p>
+                         <p>Check console output at <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>.</p>"""
+            )
+            echo 'Email Send successfully...'
             // Add notification logic here, e.g., email or Slack notification
 
         }
