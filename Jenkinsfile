@@ -9,8 +9,8 @@ pipeline{
             steps{
                 checkout scm
                 echo 'Successfully checkout'
-                sh "$(tool 'M2_HOME')/bin/mvn --help"
-                sh "$(tool 'JAVA_HOME')/bin/java --help"
+                sh "${tool 'M2_HOME'}/bin/mvn --help"
+                sh "${tool 'JAVA_HOME'}/bin/java --help"
             }
         }
     }
