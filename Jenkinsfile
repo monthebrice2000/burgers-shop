@@ -1,5 +1,5 @@
 pipeline{
-    agent 'master'
+    agent { label 'master' }
     environment {
         imageName = 'emarketshop'
         PROJECT_VERSION = '0.0.1'
