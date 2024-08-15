@@ -1,8 +1,8 @@
 pipeline{
     agent 'master'
     environment {
-        imageName 'emarketshop'
-        PROJECT_VERSION '0.0.1'
+        imageName = 'emarketshop'
+        PROJECT_VERSION = '0.0.1'
     }
     stages{
         stage('Checkout'){
