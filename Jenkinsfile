@@ -14,7 +14,7 @@ pipeline{
             }
         }
         stage('Pre-integrated Tests'){
-            parrallel {
+            parallel {
                 stage('Code Style Test') {
                     steps{
                         echo 'CI/CD: Code Style Tests'
