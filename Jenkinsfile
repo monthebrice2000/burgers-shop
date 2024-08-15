@@ -3,14 +3,14 @@ pipeline{
     environment {
         imageName = 'emarketshop'
         PROJECT_VERSION = '0.0.1'
+        M2_HOME = tool 'M2_HOME'
+        JAVA_HOME = tool 'JAVA_HOME'
     }
     stages{
         stage('Checkout'){
             steps{
                 checkout scm
                 echo 'Successfully checkout'
-                sh "${tool 'M2_HOME'}/bin/mvn --help"
-                sh "${tool 'JAVA_HOME'}/bin/java --help"
             }
         }
         stage('Pre-integrated Tests'){
@@ -23,6 +23,13 @@ pipeline{
                 stage('Unit Test') {
                     steps{
                         echo 'CI/CD: Unit Tests'
+                        cd './burgers-admin-app'
+                        sh "${M2_HOME}/bin/mvn clean test"
+                        echo 'Successfully Unit Test of burgers-admin-app'
+
+                        cd './burgers-shop-app'
+                        sh "${M2_HOME}/bin/mvn clean test"
+
                     }
                 }
                 stage('Security Test') {
