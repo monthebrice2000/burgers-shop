@@ -1,13 +1,13 @@
-// package com.ecommerce.burgers_admin;
+package com.ecommerce.burgers_admin;
 
-// import org.junit.jupiter.api.Test;
-// import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-// @SpringBootTest
-// class BurgersAdminApplicationTests {
+@SpringBootTest
+class BurgersAdminApplicationTests {
 
-// 	@Test
-// 	void contextLoads() {
-// 	}
+	@Test
+	void contextLoads() {
+	}
 
-// }
+}

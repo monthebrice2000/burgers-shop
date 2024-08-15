@@ -23,13 +23,21 @@ pipeline{
                 stage('Unit Test') {
                     steps{
                         echo 'CI/CD: Unit Tests'
-                        cd './burgers-admin-app'
-                        sh "${M2_HOME}/bin/mvn clean test"
+                        sh "cd './burgers-admin-app' && ${M2_HOME}/bin/mvn clean test"
                         echo 'Successfully Unit Test of burgers-admin-app'
 
-                        cd './burgers-shop-app'
-                        sh "${M2_HOME}/bin/mvn clean test"
+                        sh "cd './burgers-shop-app' && ${M2_HOME}/bin/mvn clean test"
+                        echo 'Successfully Unit Test of burgers-shop-app'
 
+                    }
+                    post {
+                        always {
+                            junit './burgers-shop-app/**/target/surefire-reports/*.xml'
+                            echo 'Successfully Reports Unit results test for burgers-shop-app'
+                            
+                            junit './burgers-admin-app/**/target/surefire-reports/*.xml'
+                            echo 'Successfully Reports Unit results test for burgers-admin-app'
+                        }
                     }
                 }
                 stage('Security Test') {
