@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: eburgers-shop-k8s-staging
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: eburgers-shop-k8s-production
