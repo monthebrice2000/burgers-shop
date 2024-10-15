@@ -52,7 +52,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:8080/oauth2/jwks
+          jwk-set-uri: http://localhost:8081/oauth2/jwks
       authorizationserver:
         client:
           oidc-client:
@@ -65,9 +65,9 @@ spring:
                 - "authorization_code"
                 - "refresh_token"
               redirect-uris:
-                - "http://localhost:8080/login/oauth2/code/Ov23liFpUOo2O8lyTbjZ"
+                - "http://localhost:8081/login/oauth2/code/Ov23liFpUOo2O8lyTbjZ"
               post-logout-redirect-uris:
-                - "http://127.0.0.1:8080/"
+                - "http://127.0.0.1:8081/"
               scopes:
                 - "writeIngredients"
                 - "deleteIngredients"

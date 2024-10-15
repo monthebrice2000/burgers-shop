@@ -61,13 +61,13 @@ public class LoginController {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("code", code); // Assuming `code` is defined elsewhere
         formData.add("grant_type", "authorization_code");
-        formData.add("redirect_uri", "http://localhost:8080/login/oauth2/code/Ov23liFpUOo2O8lyTbjZ");
+        formData.add("redirect_uri", "http://localhost:8082/login/oauth2/code/Ov23liFpUOo2O8lyTbjZ");
 
         // Create the request entity with the headers and form data
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(formData, headers);
 
         // Define the access token URL
-        String access_token_url = "http://localhost:8080/oauth2/token";
+        String access_token_url = "http://localhost:8082/oauth2/token";
 
         response = restTemplate.exchange(access_token_url, HttpMethod.POST, request, String.class);
 

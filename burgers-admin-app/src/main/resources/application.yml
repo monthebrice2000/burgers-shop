@@ -145,3 +145,6 @@ management:
         include: "*"
         # exclude: threaddump,heapdump
 
+# spring.banner.location=classpath:/META-INF/banner.txt
+# spring.main.banner-mode=off
+

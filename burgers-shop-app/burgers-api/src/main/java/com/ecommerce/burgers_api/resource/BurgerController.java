@@ -22,7 +22,6 @@ import com.ecommerce.burgers_repository.repository.BurgerRepository;
 
 @RestController
 @RequestMapping(path = "/api/burgers", produces = "application/json")
-// @CrossOrigin(origins = "http://tacocloud:8080")
 public class BurgerController {
 
     @Autowired

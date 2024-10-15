@@ -52,6 +52,7 @@ public class OrderController {
         this.burgerRepository.findAll().forEach(burger -> order.addBurger(burger));
         log.info("Processing order : " + order);
         return "orderForm";
+        
     }
 
     @PostMapping

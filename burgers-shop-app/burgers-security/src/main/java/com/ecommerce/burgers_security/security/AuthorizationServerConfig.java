@@ -76,6 +76,7 @@ public class AuthorizationServerConfig {
                                 // .oauth2ResourceServer((resourceServer) ->
                                 // resourceServer.jwt(Customizer.withDefaults()));
                                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(withDefaults()));
+                // .oauth2Login(Customizer.withDefaults()); // Enable OAuth2 Login if needed
 
                 return http.build();
         }
@@ -112,6 +113,8 @@ public class AuthorizationServerConfig {
                                 // Form login handles the redirect to the login page from the
                                 // authorization server filter chain
                                 .formLogin(withDefaults())
+                                // .formLogin((form) -> form
+                                //                 .loginPage("/login").defaultSuccessUrl("/home"))
                                 // to handle /h2-console interface
                                 .csrf().disable()
                                 .headers((requests) -> requests
@@ -130,8 +133,8 @@ public class AuthorizationServerConfig {
                                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                                 .redirectUri(
-                                                "http://localhost:8080/login/oauth2/code/Ov23liFpUOo2O8lyTbjZ")
-                                .postLogoutRedirectUri("http://127.0.0.1:8080")
+                                                "http://localhost:8082/login/oauth2/code/Ov23liFpUOo2O8lyTbjZ")
+                                .postLogoutRedirectUri("http://127.0.0.1:8082")
                                 .scope("writeIngredients")
                                 .scope("deleteIngredients")
                                 .scope(OidcScopes.OPENID)

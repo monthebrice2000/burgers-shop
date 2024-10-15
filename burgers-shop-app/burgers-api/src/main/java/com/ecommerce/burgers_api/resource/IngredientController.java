@@ -1,7 +1,10 @@
 package com.ecommerce.burgers_api.resource;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommerce.burgers_models.models.Burger;
 import com.ecommerce.burgers_models.models.Ingredient;
 import com.ecommerce.burgers_models.models.User;
 import com.ecommerce.burgers_repository.repository.IngredientRepository;
@@ -40,6 +44,15 @@ public class IngredientController {
     public Iterable<Ingredient> allIngredients( @AuthenticationPrincipal User user) {
         log.info("Processing : " + user);
         return repo.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Ingredient> getIngredienById(@PathVariable("id") String id) {
+        Optional<Ingredient> optIngredient = repo.findById(id);
+        if (optIngredient.isPresent()) {
+            return new ResponseEntity<>(optIngredient.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping

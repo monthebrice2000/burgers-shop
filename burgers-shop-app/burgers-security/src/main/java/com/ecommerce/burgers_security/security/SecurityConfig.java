@@ -67,7 +67,7 @@ public class SecurityConfig {
                 // .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .csrf((requests) -> requests
                         .ignoringRequestMatchers("/h2-console/**")
-                        // .ignoringRequestMatchers("/api/**")
+                        .ignoringRequestMatchers("/api/**")
                         )
                 // .csrf().disable()
                 .headers((requests) -> requests
